@@ -8,9 +8,6 @@ type Props = {}
 const Navbar = (props: Props) => {
   return (
     <nav className='flex items-center justify-between py-5'>
-        <Link href="/">
-            <h1 className='text-2xl font-bold text-primary'>Foundry</h1>
-        </Link>
         <div className='flex items-center gap-4'>
             <ThemeToggle />
             <Button variant="outline" className=''>
