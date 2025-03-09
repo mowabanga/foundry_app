@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav className='mt-4'>
       <div className='flex justify-end items-center gap-2 md:gap-4 w-full'>
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
       </div>
     </nav>
   )

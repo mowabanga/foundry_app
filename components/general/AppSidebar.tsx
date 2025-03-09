@@ -26,53 +26,41 @@ const AppSidebar = () => {
           collapsible="none" 
           className="bg-primary mb-4 h-screen rounded-r-3xl rounded-l-none md:rounded-l-3xl mt-4 ml-4 w-64 rounded-b-3xl"
         >
+          {/* change structure: sidebar to start form top to bottom with the revised list: 
+                    General -  Dashboard
+                    Accounting - Transactions, Accounts, Transactional Items
+                    User Management - Members, Administrations, Logs 
+
+                    ** Move user icon  to top right of navbar
+          */}
           <SidebarContent className="flex flex-col h-full">
             <SidebarGroup className="flex flex-col h-full">
               <div>
                 <SidebarHeader className='text-xl md:text-2xl font-bold text-white px-4 pt-4'>Foundry</SidebarHeader>
-                <SidebarGroupLabel className="font-bold text-white px-4">Main</SidebarGroupLabel>
+                <SidebarGroupLabel className="font-bold text-white px-4">General</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu className='text-white'>
                     <SidebarMenuItem key="overview">
                       <SidebarMenuButton asChild>
                         <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                           <Monitor size={20} />
-                          <span>Overview</span>
+                          <span>Dashboard</span>
                         </Link>
                       </SidebarMenuButton>
-                    </SidebarMenuItem>
-
-                    <SidebarMenuItem key="transactions">
-                      <SidebarMenuButton asChild>
-                        <Link href="/transactions" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <CircleDollarSign size={20} />
-                          <span>Transactions</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-
-                    <SidebarMenuItem key="members">
-                      <SidebarMenuButton asChild>
-                        <Link href="/members" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Users size={20} />
-                          <span>Members</span>
-                        </Link>
-                      </SidebarMenuButton>
-                      <SidebarMenuBadge className="bg-white/50">109</SidebarMenuBadge>
                     </SidebarMenuItem>
                   </SidebarMenu>
                 </SidebarGroupContent>
 
                 <Separator className="bg-white/50 my-2.5 mx-4" />
 
-                <SidebarGroupLabel className="font-bold text-white px-4">Planner</SidebarGroupLabel>
+                <SidebarGroupLabel className="font-bold text-white px-4">Accounting</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu className='text-white'>
                     <SidebarMenuItem key="accounts">
                       <SidebarMenuButton asChild>
                         <Link href="/accounts" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                           <ShoppingBag size={20} />
-                          <span>Accounts</span>
+                          <span>Transactions</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -81,7 +69,7 @@ const AppSidebar = () => {
                       <SidebarMenuButton asChild>
                         <Link href="/events" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                           <Calendar size={20} />
-                          <span>Events</span>
+                          <span>Accounts</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
