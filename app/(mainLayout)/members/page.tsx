@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 export default function Members() {
   const [members, setMembers] = useState([
@@ -18,7 +18,7 @@ export default function Members() {
     email: '',
   });
 
-  const handleAddMember = (e) => {
+  const handleAddMember = (e: FormEvent) => {
     e.preventDefault();
     const member = {
       id: members.length + 1,
