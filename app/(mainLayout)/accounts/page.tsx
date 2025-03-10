@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 export default function Accounts() {
   const [accounts, setAccounts] = useState([
@@ -13,14 +13,14 @@ export default function Accounts() {
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState<number | null>(null);
   const [newAccount, setNewAccount] = useState({
     name: '',
     type: 'Operating',
     balance: 0,
   });
 
-  const handleAddAccount = (e) => {
+  const handleAddAccount = (e: FormEvent) => {
     e.preventDefault();
     const account = {
       id: accounts.length + 1,
@@ -39,7 +39,7 @@ export default function Accounts() {
     setSelectedAccount(null);
   };
 
-  const handleToggleStatus = (id) => {
+  const handleToggleStatus = (id: number) => {
     setAccounts(accounts.map(account => 
       account.id === id ? { ...account, isActive: !account.isActive } : account
     ));
