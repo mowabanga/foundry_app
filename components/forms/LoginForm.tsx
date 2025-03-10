@@ -29,6 +29,8 @@ const LoginForm = () => {
     })
   return (
     <div className="flex flex-col gap-6 w-full max-w-md mx-auto p-4">
+
+        {/* Add server side form validation, authentication routes, fix UI for this page */}
         <Card className="w-full">
             <CardHeader className='text-center text-xl sm:text-2xl font-semibold'>Welcome Back!</CardHeader>
             <CardContent>
