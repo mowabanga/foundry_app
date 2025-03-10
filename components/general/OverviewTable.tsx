@@ -1,7 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../ui/table'
-
-type Props = {}
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 
 const members = [
     {
@@ -42,7 +40,7 @@ const members = [
 
 ]
 
-const OverviewTable = (props: Props) => {
+const OverviewTable = () => {
   return (
     <Table>
         <TableCaption>Recent Transactions</TableCaption>
@@ -57,7 +55,7 @@ const OverviewTable = (props: Props) => {
         </TableHeader>
         <TableBody>
             {members.map((transaction) => (
-                <TableRow>
+                <TableRow key={transaction.number}>
                     <TableCell className='font-medium'>{transaction.name}</TableCell>
                     <TableCell>{transaction.number}</TableCell>
                     <TableCell>{transaction.group}</TableCell>

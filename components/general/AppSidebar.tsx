@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
-import { Calendar, CircleDollarSign, LogOutIcon, Menu, Monitor, ShoppingBag, UserCircleIcon, Users, X } from 'lucide-react'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
+import { Calendar, LogOutIcon, Menu, Monitor, ShoppingBag, UserCircleIcon, Users, X } from 'lucide-react'
 import Link from 'next/link'
 import { Separator } from '../ui/separator'
 

@@ -1,15 +1,13 @@
 "use client"
 
 import React from 'react'
-import { Card, CardContent, CardDescription, CardHeader } from '../ui/card'
+import { Card, CardContent, CardHeader } from '../ui/card'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
-
-type Props = {}
 
 
 const FormSchema = z.object({
@@ -21,7 +19,7 @@ const FormSchema = z.object({
     })
 })
 
-const LoginForm = (props: Props) => {
+const LoginForm = () => {
     const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {

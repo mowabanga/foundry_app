@@ -1,8 +1,6 @@
 import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '../ui/table'
 
-type Props = {}
-
 const members = [
     {
         name: "John Doe",
@@ -163,8 +161,7 @@ const members = [
 
 ]
 
-const AppTable = (props: Props) => {
-    let sum = 0
+const AppTable = () => {
   return (
     <Table>
         <TableCaption>A list of all your members</TableCaption>
@@ -178,7 +175,7 @@ const AppTable = (props: Props) => {
         </TableHeader>
         <TableBody>
             {members.map((member) => (
-                <TableRow>
+                <TableRow key={member.number}>
                     <TableCell className='font-medium'>{member.name}</TableCell>
                     <TableCell>{member.number}</TableCell>
                     <TableCell>{member.role}</TableCell>

@@ -1,6 +1,6 @@
 import Navbar from "@/components/general/Navbar";
 import { ReactNode } from "react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/general/AppSidebar";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
