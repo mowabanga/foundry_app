@@ -1,4 +1,3 @@
-import Navbar from "@/components/general/Navbar";
 import { ReactNode } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/general/AppSidebar";
@@ -12,7 +11,6 @@ export default function MainLayout({ children }: { children: ReactNode }) {
                 <AppSidebar />
               </aside>
               <div className="flex-grow p-4">
-                <Navbar />
                 {children}
               </div>
             </SidebarProvider>
