@@ -24,7 +24,7 @@ const AppSidebar = () => {
       <div className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out z-40`}>
         <Sidebar 
           collapsible="none" 
-          className="bg-primary mb-4 h-screen rounded-r-3xl rounded-l-none md:rounded-l-3xl mt-4 ml-4 w-64 rounded-b-3xl"
+          className="bg-primary h-screen  w-64 rounded-b-3xl"
         >
           {/* change structure: sidebar to start form top to bottom with the revised list: 
                     General -  Dashboard
@@ -58,7 +58,7 @@ const AppSidebar = () => {
                   <SidebarMenu className='text-white'>
                     <SidebarMenuItem key="accounts">
                       <SidebarMenuButton asChild>
-                        <Link href="/accounts" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                        <Link href="/transactions" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                           <ShoppingBag size={20} />
                           <span>Transactions</span>
                         </Link>
@@ -67,7 +67,7 @@ const AppSidebar = () => {
 
                     <SidebarMenuItem key="Events">
                       <SidebarMenuButton asChild>
-                        <Link href="/events" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                        <Link href="/accounts" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                           <Calendar size={20} />
                           <span>Accounts</span>
                         </Link>
@@ -76,9 +76,36 @@ const AppSidebar = () => {
 
                     <SidebarMenuItem key="users">
                       <SidebarMenuButton asChild>
-                        <Link href="#" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                        <Link href="/users" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
                           <Users size={20} />
                           <span>Users</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </SidebarMenu>
+                </SidebarGroupContent>
+
+                <Separator className="bg-white/50 my-2.5 mx-4" />
+                <SidebarGroupLabel className="font-bold text-white px-4">User Management</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu className='text-white'>
+                  <SidebarMenuItem key="overview">
+                      <SidebarMenuButton asChild>
+                        <Link href="/members" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                          <Monitor size={20} />
+                          <span>Members</span>
+                        </Link>
+                      </SidebarMenuButton>
+                      <SidebarMenuButton asChild>
+                        <Link href="/administration" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                          <Monitor size={20} />
+                          <span>Administration</span>
+                        </Link>
+                      </SidebarMenuButton>
+                      <SidebarMenuButton asChild>
+                        <Link href="/logs" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                          <Monitor size={20} />
+                          <span>Logs</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

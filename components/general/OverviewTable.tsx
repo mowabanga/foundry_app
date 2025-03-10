@@ -6,35 +6,35 @@ type Props = {}
 const members = [
     {
         name: "John Doe",
-        number: "0701234567",
+        number: "0740088697",
+        group: "usher",
+        amount: 2000,
+        created: "01/01/2025"
+    },
+    {
+        name: "Mary Doe",
+        number: "0728328112",
+        group: "usher",
+        amount: 2000,
+        created: "01/01/2025"
+    },
+    {
+        name: "Peter Doe",
+        number: "0711234123",
         group: "usher",
         amount: 2000,
         created: "01/01/2025"
     },
     {
         name: "John Doe",
-        number: "0701234567",
+        number: "0718283912",
         group: "usher",
         amount: 2000,
         created: "01/01/2025"
     },
     {
         name: "John Doe",
-        number: "0701234567",
-        group: "usher",
-        amount: 2000,
-        created: "01/01/2025"
-    },
-    {
-        name: "John Doe",
-        number: "0701234567",
-        group: "usher",
-        amount: 2000,
-        created: "01/01/2025"
-    },
-    {
-        name: "John Doe",
-        number: "0701234567",
+        number: "0701234152",
         group: "usher",
         amount: 2000,
         created: "01/01/2025"
