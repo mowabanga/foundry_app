@@ -34,6 +34,7 @@ const LoginForm = () => {
       router.push("/");
     } catch (err) {
       setError("Invalid credentials. Please try again.");
+      console.log(err);
     }
   };
 
