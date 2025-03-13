@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { login, setAuthToken } from "@/services/auth";
 import { AuthRequest } from "@/models/types";
 
-// ✅ Schema validation for form inputs
+// Schema validation for form inputs
 const FormSchema = z.object({
   value: z.string().min(10, { message: "Mobile number must be at least 10 digits long." }),
   password: z.string().min(6, { message: "Password must be at least 6 characters long." }),
