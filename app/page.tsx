@@ -22,7 +22,7 @@ export default function Home() {
   // Return a loading state while checking auth
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <p>Loading...</p>
+      <div className="spinner"></div>
     </div>
   );
 }
