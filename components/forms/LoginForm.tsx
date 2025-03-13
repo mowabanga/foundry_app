@@ -32,8 +32,8 @@ const LoginForm = () => {
       const response = await login({ value: data.value, password: data.password });
       setAuthToken(response.token); // Save token for future requests
       router.push("/");
-    } catch (err: any) {
-      setError(err?.message || "Invalid credentials. Please try again.");
+    } catch (err) {
+      setError("Invalid credentials. Please try again.");
     }
   };
 
