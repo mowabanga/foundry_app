@@ -1,9 +1,11 @@
+import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+
 export default function Dashboard() {
   const stats = [
-    { name: 'Total Members', value: '2,847' },
-    { name: 'Monthly Donations', value: '$24,500' },
-    { name: 'Active Programs', value: '12' },
-    { name: 'Upcoming Events', value: '8' },
+    { name: 'Total Members', value: '2,847', change: '+6%' },
+    { name: 'Monthly Donations', value: '$24,500', change: '-2%' },
+    { name: 'Active Programs', value: '12', change: '+18%' },
+    { name: 'Upcoming Events', value: '8', change: '+1%' },
   ];
 
   const recentActivities = [
@@ -16,12 +18,18 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <div key={stat.name} className="bg-white shadow rounded-lg p-6">
-            <dt className="text-sm font-medium text-gray-500 truncate">{stat.name}</dt>
-            <dd className="mt-1 text-3xl font-semibold text-gray-900">{stat.value}</dd>
-          </div>
-        ))}
+        {stats.map((stat) => {
+          const isPositive = stat.change.startsWith("+");
+          return (
+            <div key={stat.name} className="bg-white shadow rounded-lg p-6">
+              <dt className="text-sm font-medium text-gray-500 truncate">{stat.name}</dt>
+              <dd className="mt-1 text-3xl font-semibold text-gray-900">{stat.value}</dd>
+              <div>
+                {isPositive ? <ArrowUpRight className="h-4 w-4 mr-1" /> : <ArrowDownRight className="h-4 w-4 mr-1" />}
+                stat.change
+              </div>
+            </div>
+          )})}
       </div>
 
       <div className="bg-white shadow rounded-lg p-6">

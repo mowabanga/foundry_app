@@ -15,8 +15,9 @@ export const setAuthToken = (token: string | null) => {
 
 
 export const login = async (data: AuthRequest) => {
+    const URL = process.env.ENDPOINT
     try {
-        const response = await apiClient.post("/account/auth", data);
+        const response = await apiClient.post("URL/account/auth", data);
         return response.data;
     } catch (error) {
         console.error("Login failed: ", error)

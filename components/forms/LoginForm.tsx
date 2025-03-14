@@ -14,7 +14,10 @@ import { AuthRequest } from "@/models/types";
 
 // Schema validation for form inputs
 const FormSchema = z.object({
-  value: z.string().min(10, { message: "Mobile number must be at least 10 digits long." }),
+  value: z.string().min(10, { message: "Mobile number must be at least 10 digits long." })
+    .refine((val) => /^\d+$/.test(val) || val.includes("@"), {
+      message: "Please enter a valid mobile number or email.",
+    }),
   password: z.string().min(6, { message: "Password must be at least 6 characters long." }),
 });
 
@@ -25,16 +28,26 @@ const LoginForm = () => {
   });
 
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const onSubmit = async (data: AuthRequest) => {
+    setIsSubmitting(true);
+    setError(null) // Clear previous error
+
     try {
       const response = await login({ value: data.value, password: data.password });
       setAuthToken(response.token); // Save token for future requests
       router.push("/");
     } catch (err) {
-      setError("Invalid credentials. Please try again.");
+      if (err instanceof Error) {
+        setError(err.message || "Invalid credentials. Please try again.")
+      } else {
+        setError("An unexpected error  occured. Please try again.");
+      }
       console.log(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -54,9 +67,13 @@ const LoginForm = () => {
                   name="value"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mobile</FormLabel>
+                      <FormLabel>Mobile or Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="0712345678" {...field} />
+                        <Input 
+                          placeholder="0712345678" 
+                          {...field}
+                          aria-describedby="value-error"
+                        />
                       </FormControl>
                       {/* Display validation error */}
                       {form.formState.errors.value && (
@@ -83,8 +100,8 @@ const LoginForm = () => {
                 />
 
                 {/* Submit Button */}
-                <Button type="submit" className="w-full mt-4 hover:cursor-pointer">
-                  Login
+                <Button type="submit" className="w-full mt-4 hover:cursor-pointer" disabled={isSubmitting}>
+                  {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
               </form>
             </Form>
