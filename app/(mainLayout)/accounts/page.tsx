@@ -46,7 +46,7 @@ export default function Accounts() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 my-14">
       <div className="bg-white shadow rounded-lg p-6">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">

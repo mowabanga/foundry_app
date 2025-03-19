@@ -1,3 +1,4 @@
+import { DonationsChart } from "@/components/general/DonationsChart";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 export default function Dashboard() {
@@ -8,77 +9,31 @@ export default function Dashboard() {
     { name: 'Upcoming Events', value: '8', change: '+1%' },
   ];
 
-  const recentActivities = [
-    { type: 'New Member', name: 'John Smith', date: '2 hours ago' },
-    { type: 'Donation', name: 'Sarah Johnson', amount: '$500', date: '4 hours ago' },
-    { type: 'Event', name: 'Youth Meeting', attendees: '45', date: 'Yesterday' },
-    { type: 'Program', name: 'Food Drive', status: 'Started', date: 'Yesterday' },
-  ];
-
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="flex flex-col items-center min-h-screen space-y-6 my-14">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:text-2xl lg:grid-cols-4 w-full max-w-screen-lg">
         {stats.map((stat) => {
           const isPositive = stat.change.startsWith("+");
           return (
-            <div key={stat.name} className="bg-white shadow rounded-lg p-6">
+            <div
+              key={stat.name}
+              className="shadow text-sm md:text-2xl lg:text-4xl rounded-lg p-6 w-[150px] mx-auto md:w-full max-w-xs bg-cyan-50"
+            >
               <dt className="text-sm font-medium text-gray-500 truncate">{stat.name}</dt>
-              <dd className="mt-1 text-3xl font-semibold text-gray-900">{stat.value}</dd>
-              <div>
-                {isPositive ? <ArrowUpRight className="h-4 w-4 mr-1" /> : <ArrowDownRight className="h-4 w-4 mr-1" />}
-                stat.change
+              <dd className="mt-1 text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900">{stat.value}</dd>
+              <div className="flex items-center mt-2 text-sm font-medium text-gray-500">  
+                {isPositive ? (
+                  <ArrowUpRight className="h-4 w-4 mr-1 text-green-500" />
+                ) : (
+                  <ArrowDownRight className="h-4 w-4 mr-1 text-red-500" />
+                )}
+                {stat.change}
               </div>
             </div>
-          )})}
+          );
+        })}
       </div>
-
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Activity</h2>
-        <div className="flow-root">
-          <ul className="-mb-8">
-            {recentActivities.map((activity, idx) => (
-              <li key={idx}>
-                <div className="relative pb-8">
-                  {idx !== recentActivities.length - 1 && (
-                    <span className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-                  )}
-                  <div className="relative flex space-x-3">
-                    <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                      <div>
-                        <p className="text-sm text-gray-500">
-                          {activity.type === 'Donation' ? (
-                            <>
-                              <span className="font-medium text-gray-900">{activity.name}</span> donated{' '}
-                              <span className="font-medium text-gray-900">{activity.amount}</span>
-                            </>
-                          ) : activity.type === 'Event' ? (
-                            <>
-                              <span className="font-medium text-gray-900">{activity.name}</span> had{' '}
-                              <span className="font-medium text-gray-900">{activity.attendees}</span> attendees
-                            </>
-                          ) : activity.type === 'Program' ? (
-                            <>
-                              <span className="font-medium text-gray-900">{activity.name}</span> program{' '}
-                              <span className="font-medium text-gray-900">{activity.status}</span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="font-medium text-gray-900">{activity.name}</span> joined as a new member
-                            </>
-                          )}
-                        </p>
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        <time dateTime={activity.date}>{activity.date}</time>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <DonationsChart />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../ui/sidebar'
 import { Calendar, LogOutIcon, Menu, Monitor, ShoppingBag, UserCircleIcon, Users, X } from 'lucide-react'
 import Link from 'next/link'
-import { Separator } from '../ui/separator'
 
 const AppSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +17,16 @@ const AppSidebar = () => {
         className="md:hidden fixed z-50 top-4 left-4 p-2 rounded-full bg-primary text-white shadow-md mb-4"
         aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
       >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
+        {isOpen ? <X size={24} className='bg-blue-600 ring-4 ring-amber-200 rounded-full absolute left-57'/> : <Menu size={24} />}
       </button>
       
-      <div className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out z-40`}>
+      <div 
+        className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out z-40`}
+        style={{ width: isOpen ? '80%' : '0', maxWidth: '16rem' }}
+      >
         <Sidebar 
           collapsible="none" 
-          className="bg-primary h-screen  w-64 rounded-b-3xl"
+          className="bg-primary h-screen w-full md:w-64 overflow-x-hidden overflow-y-auto"
         >
           {/* change structure: sidebar to start form top to bottom with the revised list: 
                     General -  Dashboard
@@ -35,89 +37,97 @@ const AppSidebar = () => {
           */}
           <SidebarContent className="flex flex-col h-full">
             <SidebarGroup className="flex flex-col h-full">
-              <div>
-                <SidebarHeader className='text-xl md:text-2xl font-bold text-white px-4 pt-4'>Foundry</SidebarHeader>
-                <SidebarGroupLabel className="font-bold text-white px-4">General</SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu className='text-white'>
+              <div className='h-full flex flex-col gap-4'>
+
+                <SidebarHeader className='text-xl md:text-2xl font-bold text-white pt-4'>
+                  <span>Foundry</span>
+                </SidebarHeader>
+
+                <div>
+                  <SidebarGroupLabel className="font-bold text-white ">General</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu className='text-white'>
+                      <SidebarMenuItem key="overview">
+                        <SidebarMenuButton asChild>
+                          <Link href="/dashboard" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <Monitor size={20} />
+                            <span>Dashboard</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </div>
+
+                
+                <div>
+                  <SidebarGroupLabel className="font-bold text-white ">Accounting</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu className='text-white'>
+                      <SidebarMenuItem key="accounts">
+                        <SidebarMenuButton asChild>
+                          <Link href="/transactions" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <ShoppingBag size={20} />
+                            <span>Transactions</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+
+                      <SidebarMenuItem key="Events">
+                        <SidebarMenuButton asChild>
+                          <Link href="/accounts" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <Calendar size={20} />
+                            <span>Accounts</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+
+                      <SidebarMenuItem key="users">
+                        <SidebarMenuButton asChild>
+                          <Link href="/users" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <Users size={20} />
+                            <span>Users</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </div>
+
+                <div>
+                  <SidebarGroupLabel className="font-bold text-white ">User Management</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu className='text-white'>
                     <SidebarMenuItem key="overview">
-                      <SidebarMenuButton asChild>
-                        <Link href="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Monitor size={20} />
-                          <span>Dashboard</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </SidebarGroupContent>
-
-                <Separator className="bg-white/50 my-2.5 mx-4" />
-
-                <SidebarGroupLabel className="font-bold text-white px-4">Accounting</SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu className='text-white'>
-                    <SidebarMenuItem key="accounts">
-                      <SidebarMenuButton asChild>
-                        <Link href="/transactions" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <ShoppingBag size={20} />
-                          <span>Transactions</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-
-                    <SidebarMenuItem key="Events">
-                      <SidebarMenuButton asChild>
-                        <Link href="/accounts" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Calendar size={20} />
-                          <span>Accounts</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-
-                    <SidebarMenuItem key="users">
-                      <SidebarMenuButton asChild>
-                        <Link href="/users" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Users size={20} />
-                          <span>Users</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </SidebarGroupContent>
-
-                <Separator className="bg-white/50 my-2.5 mx-4" />
-                <SidebarGroupLabel className="font-bold text-white px-4">User Management</SidebarGroupLabel>
-                <SidebarGroupContent>
-                  <SidebarMenu className='text-white'>
-                  <SidebarMenuItem key="overview">
-                      <SidebarMenuButton asChild>
-                        <Link href="/members" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Monitor size={20} />
-                          <span>Members</span>
-                        </Link>
-                      </SidebarMenuButton>
-                      <SidebarMenuButton asChild>
-                        <Link href="/administration" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Monitor size={20} />
-                          <span>Administration</span>
-                        </Link>
-                      </SidebarMenuButton>
-                      <SidebarMenuButton asChild>
-                        <Link href="/logs" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                          <Monitor size={20} />
-                          <span>Logs</span>
-                        </Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </SidebarGroupContent>
+                        <SidebarMenuButton asChild>
+                          <Link href="/members" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <Monitor size={20} />
+                            <span>Members</span>
+                          </Link>
+                        </SidebarMenuButton>
+                        <SidebarMenuButton asChild>
+                          <Link href="/administration" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <Monitor size={20} />
+                            <span>Administration</span>
+                          </Link>
+                        </SidebarMenuButton>
+                        <SidebarMenuButton asChild>
+                          <Link href="/logs" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+                            <Monitor size={20} />
+                            <span>Logs</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </div>
               </div>
               
-              <div className="mt-auto">
+              <div className="mb-2">
                 <SidebarFooter className='flex flex-row justify-between items-center text-white p-4'>
-                  <div className='flex flex-row gap-2 items-center'>
-                    <UserCircleIcon size={24} />
-                    <div className="text-xs">
+                  <div className='flex flex-row gap-2 items-center justify-center'>
+                    <UserCircleIcon size={28} />
+                    <div className="text-xs flex flex-col justify-center">
                       <p>071234567</p>
                       <p>johndoe@xyz.com</p>
                     </div>
