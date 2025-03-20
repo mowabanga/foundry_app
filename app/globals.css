@@ -125,3 +125,9 @@ html, body {
   height: 40px;
   animation: spin 1s linear infinite;
 }
+
+/* Remove focus outline */
+input:focus, input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}

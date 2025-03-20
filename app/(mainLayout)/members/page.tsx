@@ -1,14 +1,24 @@
 'use client';
 
+import { Input } from '@/components/ui/input';
+import { ChevronDown, SearchIcon } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 export default function Members() {
   const [members, setMembers] = useState([
-    { id: 1, name: 'John Smith', email: 'john@example.com', phone: '(555) 123-4567', status: 'Active', joinDate: '2023-01-15' },
-    { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', phone: '(555) 234-5678', status: 'Active', joinDate: '2023-02-20' },
-    { id: 3, name: 'Michael Brown', email: 'michael@example.com', phone: '(555) 345-6789', status: 'Inactive', joinDate: '2023-03-10' },
-    { id: 4, name: 'Emily Davis', email: 'emily@example.com', phone: '(555) 456-7890', status: 'Active', joinDate: '2023-04-05' },
-    { id: 5, name: 'David Wilson', email: 'david@example.com', phone: '(555) 567-8901', status: 'Active', joinDate: '2023-05-12' },
+    { id: 1, name: 'John Doer', email: 'john@example.com', phone: '0712838112' },
+    { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', phone: '0727282811' },
+    { id: 3, name: 'Michael Brown', email: 'michael@example.com', phone: '0112228752'},
+    { id: 4, name: 'Emily Davis', email: 'emily@example.com', phone: '0718293200' },
+    { id: 5, name: 'David Wilson', email: 'david@example.com', phone: '0792372821' },
+    { id: 6, name: 'David Wilson', email: 'david@example.com', phone: '0791721255' },
+    { id: 7, name: 'Jayden Otis', email: 'jayden@example.com', phone: '0712172931'},
+    { id: 8, name: 'Ivy Karen', email: 'ivy@example.com', phone: '02718121122'},
+    { id: 9, name: 'Collins Levy', email: 'levy@example.com', phone: '0718293200'},
+    { id: 10, name: 'Benjamin Ian', email: 'ian@example.com', phone: '0700296217'},
+    { id: 11, name: 'Yvonne Kawi', email: 'kawi@example.com', phone: '0721928826'},
+    { id: 12, name: 'Karen Ung', email: 'karen@example.com', phone: '0734157266'},
+    { id: 13, name: 'Timothy Lee', email: 'timothy@example.com', phone: '0725172822'},
   ]);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -32,12 +42,11 @@ export default function Members() {
   };
 
   return (
-    <div className="space-y-6 my-14">
-      <div className="bg-white shadow rounded-lg p-6">
+    <div className="my-14 px-0 w-full max-w-full">
+      <div className="bg-white shadow rounded-lg p-4 w-full">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h2 className="text-2xl font-semibold text-gray-800">Members</h2>
-            <p className="mt-2 text-sm text-gray-600">A list of all members in your organization.</p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
@@ -48,46 +57,55 @@ export default function Members() {
             </button>
           </div>
         </div>
-        <div className="mt-8 flow-root">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead>
-                  <tr>
-                    <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Name</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Phone</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Join Date</th>
+        <div className='flex items-center gap-4'>
+          <div className="flex mt-4 items-center gap-2 sm:gap-4 border border-black/50 rounded-2xl px-2 py-1 w-full sm:w-auto">
+            <Input 
+              placeholder="Search" 
+              className="border border-transparent shadow-transparent  sm:w-auto"
+            />
+            <SearchIcon size={20} className="hover:cursor-pointer"/>
+          </div>
+          <div className="flex mt-4 items-center gap-2 sm:gap-4 border border-black/50 rounded-2xl px-2 py-1 w-fit sm:w-auto">
+          <Input 
+              placeholder="Search By" 
+              className="border border-transparent shadow-transparent  sm:w-auto"
+          />
+            <ChevronDown size={20} className="hover:cursor-pointer"/>
+          </div>
+        </div>
+      
+        <div className="mt-8 w-full overflow-hidden">
+          <div className="w-full overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-300 ">
+              <thead>
+                <tr>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 min-w-[150px]">Name</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-[200px]">Email</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-1/4">Phone</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {members.map((member) => (
+                  <tr key={member.id}>
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{member.name}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {member.email.replace(/(.{2}).+(@.+)/, '$1***$2')}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {member.phone.replace(/(\d{3})\d{4}(\d{3})/, '$1****$2')}
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {members.map((member) => (
-                    <tr key={member.id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{member.name}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{member.email}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{member.phone}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm">
-                        <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                          member.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }`}>
-                          {member.status}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{member.joinDate}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
       {/* Add Member Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-lg">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Add New Member</h3>
             <form onSubmit={handleAddMember}>
               <div className="space-y-4">

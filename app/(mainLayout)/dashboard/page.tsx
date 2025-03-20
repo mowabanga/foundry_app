@@ -33,7 +33,9 @@ export default function Dashboard() {
           );
         })}
       </div>
-      <DonationsChart />
+      <div className="w-full max-w-screen-lg">
+        <DonationsChart />
+      </div>
     </div>
   );
 }

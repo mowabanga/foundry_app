@@ -18,17 +18,17 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "January", donation: 1860 },
+  { month: "February", donation: 3050 },
+  { month: "March", donation: 4370 },
+  { month: "April", donation: 2230 },
+  { month: "May", donation: 1430 },
+  { month: "June", donation: 2140 },
 ]
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  donation: {
+    label: "Donation",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig
@@ -37,9 +37,8 @@ export function DonationsChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Showing total donations for the last 6 months
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -65,7 +64,7 @@ export function DonationsChart() {
               content={<ChartTooltipContent indicator="line" />}
             />
             <Area
-              dataKey="desktop"
+              dataKey="donation"
               type="natural"
               fill="var(--color-desktop)"
               fillOpacity={0.4}
@@ -74,18 +73,6 @@ export function DonationsChart() {
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
-          </div>
-        </div>
-      </CardFooter>
     </Card>
   )
 }

@@ -1,19 +1,25 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { EditIcon, TrashIcon } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 export default function Accounts() {
   const [accounts, setAccounts] = useState([
-    { id: 1, name: 'General Fund', balance: 45000, type: 'Operating', lastTransaction: '2023-09-15', isActive: true },
-    { id: 2, name: 'Building Fund', balance: 150000, type: 'Savings', lastTransaction: '2023-09-14', isActive: true },
-    { id: 3, name: 'Missions Fund', balance: 25000, type: 'Restricted', lastTransaction: '2023-09-13', isActive: true },
-    { id: 4, name: 'Youth Ministry', balance: 8500, type: 'Operating', lastTransaction: '2023-09-12', isActive: true },
-    { id: 5, name: 'Emergency Fund', balance: 30000, type: 'Savings', lastTransaction: '2023-09-11', isActive: true },
+    { id: 1, name: 'Tithe', balance: 45000, type: 'Operating', isActive: true },
+    { id: 2, name: 'Evangelism local church', balance: 150000, type: 'Savings', isActive: true },
+    { id: 3, name: 'Msamaria Mwema', balance: 25000, type: 'Restricted', isActive: true },
+    { id: 4, name: 'Elders Account', balance: 8500, type: 'Operating', isActive: true },
+    { id: 5, name: 'Singles Account', balance: 30000, type: 'Savings', isActive: true },
+    { id: 6, name: 'Funeral Monicah Odek', balance: 30000, type: 'Savings', isActive: true },
+    { id: 7, name: 'Funeral Joyce Opondo', balance: 30000, type: 'Savings', isActive: true },
   ]);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState<number | null>(null);
+  const [editedAccount, setEditedAccount] = useState<{ id: number; name: string } | null>(null);
   const [newAccount, setNewAccount] = useState({
     name: '',
     type: 'Operating',
@@ -37,6 +43,17 @@ export default function Accounts() {
     setAccounts(accounts.filter(account => account.id !== selectedAccount));
     setIsDeleteModalOpen(false);
     setSelectedAccount(null);
+  };
+
+  const handleEditAccount = (e: FormEvent) => {
+    e.preventDefault();
+    if (editedAccount) {
+      setAccounts(accounts.map(account => 
+        account.id === editedAccount.id ? { ...account, name: editedAccount.name } : account
+      ));
+      setIsEditModalOpen(false);
+      setEditedAccount(null);
+    }
   };
 
   const handleToggleStatus = (id: number) => {
@@ -69,18 +86,17 @@ export default function Accounts() {
                 <thead>
                   <tr>
                     <th className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Account Name</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
-                    <th className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Balance</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Transaction</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
-                    <th className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">Actions</th>
+                    <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Type</th>
+                    <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Balance</th>
+                    <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Active</th>
+                    <th className="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {accounts.map((account) => (
                     <tr key={account.id} className={!account.isActive ? 'bg-gray-50' : ''}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">{account.name}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm">
+                      <td className="whitespace-nowrap text-center px-3 py-4 text-sm">
                         <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
                           account.type === 'Operating' ? 'bg-green-100 text-green-800' :
                           account.type === 'Savings' ? 'bg-blue-100 text-blue-800' :
@@ -89,11 +105,10 @@ export default function Accounts() {
                           {account.type}
                         </span>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-right text-gray-900">
+                      <td className="whitespace-nowrap text-center px-3 py-4 text-sm text-gray-900">
                         ${account.balance.toLocaleString()}
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{account.lastTransaction}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm">
+                      <td className="whitespace-nowrap text-center px-3 py-4 text-sm">
                         <button
                           onClick={() => handleToggleStatus(account.id)}
                           className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 ${
@@ -105,16 +120,27 @@ export default function Accounts() {
                           }`} />
                         </button>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-right">
-                        <button
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-right flex items-center justify-center gap-2">
+                        <Button
+                          onClick={() => {
+                            setEditedAccount({ id: account.id, name: account.name });
+                            setIsEditModalOpen(true);
+                          }}
+                          className="text-white rounded-full flex items-center gap-1"
+                        >
+                          <EditIcon size={24} />
+                          Edit
+                        </Button>
+                        <Button
                           onClick={() => {
                             setSelectedAccount(account.id);
                             setIsDeleteModalOpen(true);
                           }}
-                          className="text-red-600 hover:text-red-900"
+                          className="text-white rounded-full bg-red-600 flex items-center gap-4"
                         >
+                          <TrashIcon size={24} />
                           Delete
-                        </button>
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -127,7 +153,7 @@ export default function Accounts() {
 
       {/* Add Account Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Add New Account</h3>
             <form onSubmit={handleAddAccount}>
@@ -188,9 +214,48 @@ export default function Accounts() {
         </div>
       )}
 
+      {/* Edit Account Modal */}
+      {isEditModalOpen && editedAccount && (
+        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Edit Account</h3>
+            <form onSubmit={handleEditAccount}>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="editName" className="block text-sm font-medium text-gray-700">Account Name</label>
+                  <input
+                    type="text"
+                    id="editName"
+                    value={editedAccount.name}
+                    onChange={(e) => setEditedAccount({ ...editedAccount, name: e.target.value })}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                <button
+                  type="submit"
+                  className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:col-start-2"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Delete Account</h3>
             <p className="text-sm text-gray-500">Are you sure you want to delete this account? This action cannot be undone.</p>
