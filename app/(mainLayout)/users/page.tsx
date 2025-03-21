@@ -18,6 +18,7 @@ export default function Users() {
     };
 
     const maskEmail = (email: string) => {
+        if (!email.includes('@')) return email; // Handle invalid email format
         const [name, domain] = email.split('@');
         const maskedName = name[0] + '*'.repeat(name.length - 2) + name[name.length - 1];
         return `${maskedName}@${domain}`;
@@ -89,12 +90,12 @@ export default function Users() {
                                     <form
                                         onSubmit={(e) => {
                                             e.preventDefault();
-                                            const formData = new FormData(e.target);
+                                            const formData = new FormData(e.target as HTMLFormElement);
                                             const newUser = {
-                                                name: formData.get('name'),
-                                                email: formData.get('email'),
-                                                phone: formData.get('phone'),
-                                                role: formData.get('role'),
+                                                name: formData.get('name') as string,
+                                                email: formData.get('email') as string,
+                                                phone: formData.get('phone') as string,
+                                                role: formData.get('role') as string,
                                             };
                                             addUser(newUser);
                                         }}
