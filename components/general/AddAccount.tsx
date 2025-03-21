@@ -27,12 +27,12 @@ export default function AddAccount() {
     };
 
     return (
-        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none w-full">
             <Button
                 onClick={() => setIsAddModalOpen(true)}
-                className="block rounded-full py-2 px-3 text-center text-sm font-semibold text-white shadow-sm"
+                className="block w-full rounded-full py-2 px-3 text-center text-sm font-semibold text-white shadow-sm"
             >
-                Add Account
+                + Add Account
             </Button>
 
             {/* Add Account Modal */}
