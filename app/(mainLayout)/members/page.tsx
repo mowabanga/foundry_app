@@ -1,7 +1,7 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import { ChevronDown, SearchIcon } from 'lucide-react';
+import { ChevronDown, File, SearchIcon } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 export default function Members() {
@@ -22,6 +22,9 @@ export default function Members() {
   ]);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [searchBy, setSearchBy] = useState('');
+  const searchOptions = ['Name', 'Email', 'Phone'];
   const [newMember, setNewMember] = useState({
     name: '',
     phone: '',
@@ -51,7 +54,7 @@ export default function Members() {
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+              className="block rounded-full bg-primary py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:cursor-pointer"
             >
               Add Member
             </button>
@@ -65,12 +68,37 @@ export default function Members() {
             />
             <SearchIcon size={20} className="hover:cursor-pointer"/>
           </div>
-          <div className="flex mt-4 items-center gap-2 sm:gap-4 border border-black/50 rounded-2xl px-2 py-1 w-fit sm:w-auto">
-          <Input 
-              placeholder="Search By" 
-              className="border border-transparent shadow-transparent  sm:w-auto"
-          />
-            <ChevronDown size={20} className="hover:cursor-pointer"/>
+          <div className="relative flex mt-4 items-center gap-2 sm:gap-4 border border-black/50 rounded-2xl px-2 py-1 w-fit sm:w-auto">
+            <Input 
+                placeholder="Search By" 
+                className="border border-transparent shadow-transparent sm:w-auto"
+                readOnly
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            />
+            {searchBy}
+            <ChevronDown 
+              size={20} 
+              className={`hover:cursor-pointer transition-transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            />
+            {isDropdownOpen && (
+              <ul className="absolute top-full right-0 mt-1 border border-gray-300 rounded-md shadow-lg z-10 text-sm text-gray-600 bg-white">
+                {searchOptions.map((option) => (
+                  <li
+                    key={option}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setSearchBy(option);
+                      setIsDropdownOpen(false);
+                    }}
+                  >
+                    <div className='text-sm text-gray-500'>
+                      {option}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       
@@ -80,8 +108,9 @@ export default function Members() {
               <thead>
                 <tr>
                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 min-w-[150px]">Name</th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-[200px]">Email</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-[180px]">Email</th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-1/4">Phone</th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 min-w-1/4">Transactions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
@@ -94,6 +123,12 @@ export default function Members() {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {member.phone.replace(/(\d{3})\d{4}(\d{3})/, '$1****$2')}
                     </td>
+                    <td className="whitespace-nowrap text-right px-3 py-4 text-sm">
+                      <File 
+                        size={20} 
+                        className="text-gray-500  hover:cursor-pointer hover:text-blue-600 hover:ring-1 hover:ring-opacity-90 hover: transition-all hover:ring-blue-600 hover:ring-offset-8 hover:rounded-full"
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -104,7 +139,7 @@ export default function Members() {
 
       {/* Add Member Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-500">
           <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-lg">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Add New Member</h3>
             <form onSubmit={handleAddMember}>
@@ -152,7 +187,9 @@ export default function Members() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setIsAddModalOpen(false)}
+                  onClick={() => {
+                    setIsAddModalOpen(false); // Ensure modal state is updated
+                  }}
                   className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
                 >
                   Cancel

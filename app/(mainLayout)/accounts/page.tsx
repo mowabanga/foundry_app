@@ -1,7 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { EditIcon, TrashIcon } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { ChevronDown, EditIcon, SearchIcon, TrashIcon } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 
 export default function Accounts() {
@@ -25,6 +26,9 @@ export default function Accounts() {
     type: 'Operating',
     balance: 0,
   });
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [searchBy, setSearchBy] = useState('');
+  const searchOptions = ['Account Name', 'Type', 'Balance'];
 
   const handleAddAccount = (e: FormEvent) => {
     e.preventDefault();
@@ -68,15 +72,55 @@ export default function Accounts() {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h2 className="text-2xl font-semibold text-gray-800">Accounts</h2>
-            <p className="mt-2 text-sm text-gray-600">A list of all financial accounts in your organization.</p>
+            <div className='flex items-center gap-4'>
+          <div className="flex mt-4 items-center gap-2 sm:gap-4 border border-black/50 rounded-2xl px-2 py-1 w-full sm:w-auto">
+            <Input 
+              placeholder="Search" 
+              className="border border-transparent shadow-transparent  sm:w-auto"
+            />
+            <SearchIcon size={20} className="hover:cursor-pointer"/>
+          </div>
+          <div className="relative flex mt-4 items-center gap-2 sm:gap-4 border border-black/50 rounded-2xl px-2 py-1 w-fit sm:w-auto">
+            <Input 
+                placeholder="Search By" 
+                className="border border-transparent shadow-transparent sm:w-auto"
+                readOnly
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            />
+            {searchBy}
+            <ChevronDown 
+              size={20} 
+              className={`hover:cursor-pointer transition-transform ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            />
+            {isDropdownOpen && (
+              <ul className="absolute top-full right-0 mt-1 border border-gray-300 rounded-md shadow-lg z-10 text-sm text-gray-600 bg-white">
+                {searchOptions.map((option) => (
+                  <li
+                    key={option}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      setSearchBy(option);
+                      setIsDropdownOpen(false);
+                    }}
+                  >
+                    <div className='text-sm text-gray-500'>
+                      {option}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <button
+            {/* <Button
               onClick={() => setIsAddModalOpen(true)}
-              className="block rounded-md bg-indigo-600 py-2 px-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
+              className="block rounded-full py-2 px-3 text-center text-sm font-semibold text-white shadow-sm"
             >
               Add Account
-            </button>
+            </Button> */}
           </div>
         </div>
         <div className="mt-8 flow-root">

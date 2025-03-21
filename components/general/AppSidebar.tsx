@@ -15,6 +15,7 @@ import {
 } from "../ui/sidebar";
 import {
   Calendar,
+  Church,
   FileText,
   LogOutIcon,
   Menu,
@@ -35,7 +36,7 @@ const AppSidebar = () => {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   // ✅ Function to check if the link is active
-  const isActive = (href) => pathname === href;
+  const isActive = (href: string) => pathname === href;
 
   return (
     <>
@@ -51,12 +52,19 @@ const AppSidebar = () => {
         className={`fixed inset-y-0 left-0 transform ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 transition-transform duration-300 ease-in-out z-40`}
         style={{ width: isOpen ? "80%" : "0", maxWidth: "16rem" }}
       >
-        <Sidebar collapsible="none" className="bg-primary h-screen w-full md:w-64 overflow-x-hidden overflow-y-auto">
+        <Sidebar
+          collapsible="none"
+          className="h-screen w-full md:w-64 overflow-x-hidden overflow-y-auto"
+          style={{
+            background: "linear-gradient(to top, #1e3a8a, #3b82f6)", // Gradient from dark blue to light blue
+          }}
+        >
           <SidebarContent className="flex flex-col h-full">
             <SidebarGroup className="flex flex-col h-full">
               <div className="h-full flex flex-col gap-4">
-                <SidebarHeader className="text-xl md:text-2xl font-bold text-white pt-4">
-                  <span>Foundry</span>
+                <SidebarHeader className="text-xl flex flex-row gap-2 md:text-2xl font-bold text-white pt-4">
+                  <Church size={30}/>
+                  <h2 className="">Foundry</h2>
                 </SidebarHeader>
 
                 <div>
